@@ -23,12 +23,29 @@ CentroF *alocaMemCentroF(int k)
 {
 
     CentroF *centroF = malloc(sizeof(float) * k * 5);
+    if (centroF == NULL)
+    {
+        printf("ERRO\n");
+        exit(0);
+    }
     for (int i = 0; i < k; i++)
+    {
         centroF[i].X = (float *)malloc(sizeof(float) * 2);
-
+        if (centroF[i].X == NULL)
+        {
+            printf("ERRO\n");
+            exit(0);
+        }
+    }
     for (int i = 0; i < k; i++)
+    {
         centroF[i].Y = (float *)malloc(sizeof(float) * 2);
-
+        if (centroF[i].Y == NULL)
+        {
+            printf("ERRO\n");
+            exit(0);
+        }
+    }
     return centroF;
 }
 
@@ -36,12 +53,30 @@ Ponto *alocamemoria(int n)
 {
 
     Ponto *pontos = (Ponto *)malloc(sizeof(Ponto) * n);
+    if (pontos == NULL)
+    {
+        printf("ERRO\n");
+        exit(0);
+    }
+
     for (int i = 0; i < n; i++)
+    {
         pontos[i].X = (int *)malloc(sizeof(int));
-
+        if (pontos[i].X == NULL)
+        {
+            printf("ERRO\n");
+            exit(0);
+        }
+    }
     for (int i = 0; i < n; i++)
+    {
         pontos[i].Y = (int *)malloc(sizeof(int));
-
+        if (pontos[i].Y == NULL)
+        {
+            printf("ERRO\n");
+            exit(0);
+        }
+    }
     return pontos;
 }
 
@@ -55,11 +90,18 @@ void liberamemoria(float *menordistancia, float **distancias, int k)
 Ponto *geraPontos(Ponto *pontos, int n)
 {
 
+
     for (int i = 0; i < n; i++)
     {
-        *pontos[i].X = -20000 + rand() % 50000;
-        *pontos[i].Y = -20000 + rand() % 50000;
+        scanf("%d %d",pontos[i].X,pontos[i].Y);
     }
+
+
+    // for (int i = 0; i < n; i++)
+    // {
+    //     *pontos[i].X = -20000 + rand() % 50000;
+    //     *pontos[i].Y = -20000 + rand() % 50000;
+    // }
 
     return pontos;
 }
@@ -69,16 +111,44 @@ int **agrupaPontos(Ponto *pontos, int n, int k, int *contador, Ponto *centrosmai
     int i, j, pontoaleatorio, vetrand[k], contrand = 0;
     float menor;
 
-    float *menordistancia = (float *)malloc(sizeof(float) * n*2);
+    float *menordistancia = (float *)malloc(sizeof(float) * n);
+    if (menordistancia == NULL)
+    {
+        printf("ERRO\n");
+        exit(0);
+    }
 
-    float **distancias = (float **)malloc(sizeof(float) * n*2);
+    float **distancias = (float **)malloc(sizeof(float) * n * 2);
+    if (distancias == NULL)
+    {
+        printf("ERRO\n");
+        exit(0);
+    }
 
-    int **arrponto = (int **)malloc(sizeof(int) * k * 2*2);
+    int **arrponto = (int **)malloc(sizeof(int) * k * 2 * 2);
+    if (arrponto == NULL)
+    {
+        printf("ERRO\n");
+        exit(0);
+    }
     for (i = 0; i < k; i++)
-        arrponto[i] = (int *)malloc(sizeof(int) * n*2);
-
+    {
+        arrponto[i] = (int *)malloc(sizeof(int) * n * 2);
+        if (arrponto == NULL)
+        {
+            printf("ERRO\n");
+            exit(0);
+        }
+    }
     for (i = 0; i < k; i++)
-        distancias[i] = (float *)malloc(sizeof(float) * n * n*2);
+    {
+        distancias[i] = (float *)malloc(sizeof(float) * n );
+        if (menordistancia == NULL)
+        {
+            printf("ERRO\n");
+            exit(0);
+        }
+    }
 
     Ponto *centros = alocamemoria(k);
 
@@ -147,16 +217,45 @@ int **agrupapontos2(CentroF *centroF, Ponto *pontos, int k, int n, int *contador
 
     int i, j, menor = 9999;
 
-    float *menordistancia = (float *)malloc(sizeof(float) * n*2);
+    float *menordistancia = (float *)malloc(sizeof(float) * n * 2);
+    if (menordistancia == NULL)
+    {
+        printf("ERRO\n");
+        exit(0);
+    }
+    float **distancias = (float **)malloc(sizeof(float) * n * 2);
+    if (distancias == NULL)
+    {
+        printf("ERRO\n");
+        exit(0);
+    }
 
-    float **distancias = (float **)malloc(sizeof(float) * n*2);
+    int **arrponto = (int **)malloc(sizeof(int) * k * 2 * 2);
+    if (arrponto == NULL)
+    {
+        printf("ERRO\n");
+        exit(0);
+    }
 
-    int **arrponto = (int **)malloc(sizeof(int) * k * 2*2);
     for (i = 0; i < k; i++)
-        arrponto[i] = (int *)malloc(sizeof(int) * n*2);
+    {
+        arrponto[i] = (int *)malloc(sizeof(int) * n * 2);
+        if (arrponto[i] == NULL)
+        {
+            printf("ERRO\n");
+            exit(0);
+        }
+    }
 
     for (i = 0; i < k; i++)
-        distancias[i] = (float *)malloc(sizeof(float) * n * n*2);
+    {
+        distancias[i] = (float *)malloc(sizeof(float) * n);
+        if (distancias == NULL)
+        {
+            printf("ERRO\n");
+            exit(0);
+        }
+    }
 
     for (j = 0; j < k; j++)
         for (i = 0; i < n; i++)
@@ -203,27 +302,45 @@ int main(int argc, char *argv[])
 
     int n = 0, k = 0, **grupos, contapontos = 0, j = 0, x = 10, i = 0;
 
-    n = atoi(argv[1]);
-    k = atoi(argv[2]);
+    n = 6000000;
+    k = 200;
 
     srand(time(NULL));
 
     FILE *pont_arq;
     pont_arq = fopen("arquivo.txt", "w");
-
+  
     int *contador = malloc(sizeof(int) * k * 2);
     Ponto *pontos = alocamemoria(n);
+    
     CentroF *centroF = alocaMemCentroF(k);
+    
     CentroF *centroF2 = alocaMemCentroF(k);
+    
     Ponto *centrosmain = alocamemoria(k);
+    
 
     pontos = geraPontos(pontos, n);
+    
     grupos = agrupaPontos(pontos, n, k, contador, centrosmain);
 
-    int **gruposR = (int **)malloc(sizeof(int) * k * 7*2);
-    for (i = 0; i < k; i++)
-        gruposR[i] = (int *)malloc(sizeof(int) * contador[i] * 5*2);
+    int **gruposR = (int **)malloc(sizeof(int) * k * 7 * 2);
+    if (gruposR == NULL)
+    {
+        printf("ERRO\n");
+        exit(0);
+    }
 
+    for (i = 0; i < k; i++)
+    {
+        gruposR[i] = (int *)malloc(sizeof(int) * contador[i] * 5 * 2);
+        if (gruposR[i] == NULL)
+        {
+            printf("ERRO\n");
+            exit(0);
+        }
+    }
+    
     for (i = 0; i < k; i++)
     {
         contapontos = 0;
@@ -238,8 +355,19 @@ int main(int argc, char *argv[])
             }
     }
 
-    float *mediaX = (float *)malloc(sizeof(double) * n * 7);
-    float *mediaY = (float *)malloc(sizeof(double) * n * 7);
+    float *mediaX = (float *)malloc(sizeof(double) * k * 7);
+    if (mediaX == NULL)
+    {
+        printf("ERRO\n");
+        exit(0);
+    }
+
+    float *mediaY = (float *)malloc(sizeof(double) * k * 7);
+    if (mediaY == NULL)
+    {
+        printf("ERRO\n");
+        exit(0);
+    }
 
     for (i = 0; i < k; i++)
         for (j = 0; j < contador[i]; j++)
@@ -267,8 +395,14 @@ int main(int argc, char *argv[])
         printf("\nL = %d\n", l);
         grupos = agrupapontos2(centroF, pontos, k, n, contador);
         for (i = 0; i < k; i++)
+        {
             gruposR[i] = (int *)malloc(sizeof(int) * contador[i] * 5);
-
+            if (gruposR[i] == NULL)
+            {
+                printf("ERRO\n");
+                exit(0);
+            }
+        }
         for (i = 0; i < k; i++)
         {
             contapontos = 0;
@@ -290,7 +424,6 @@ int main(int argc, char *argv[])
                 for (j = 0; j < contador[i]; j++)
                     fprintf(pont_arq, "%d;%d;%.2f;%.2f;%.2f;%.2f;%d;%d\n", *pontos[gruposR[i][j]].X, *pontos[gruposR[i][j]].Y, *centroF[i].X, *centroF[i].Y, *centroF2[i].X, *centroF2[i].Y, *centrosmain[i].X, *centrosmain[i].Y);
             }
-            // fclose(pont_arq);
         }
 
         for (i = 0; i < k; i++)
@@ -312,21 +445,8 @@ int main(int argc, char *argv[])
         for (i = 0; i < k; i++)
         {
             *centroF[i].X = (mediaX[i] / (float)contador[i]);
-            // printf("Media %d X = %f\n", i, *centroF[i].X);
             *centroF[i].Y = (mediaY[i] / (float)contador[i]);
-            // printf("Media %d Y = %f\n", i, *centroF[i].Y);
-            // printf("\n\n");
         }
-
-        // if (l == x-1)
-        // {
-        //     for (i = 0; i < k; i++)
-        //     {
-        //         printf("Centro %d  %d\n", i, contador[i]);
-        //         for (j = 0; j < contador[i]; j++)
-        //             printf("X = %d  Y=%d\n", *pontos[gruposR[i][j]].X, *pontos[gruposR[i][j]].Y);
-        //     }
-        // }
 
         for (i = 0; i < k; i++)
             free(gruposR[i]);
